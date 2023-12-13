@@ -3,8 +3,10 @@ let numberA = "1"
 
 class Button {
 	
-	constructor(x,y){
+	constructor(x,y, width, height){
         this.position =new createVector (x,y);
+				this.width = width; 
+				this.height = height;
     }
 	
 	display(){
@@ -32,15 +34,4 @@ class Button {
 
 	}
 	
-	mouseClicked(){
-		if (optionAA == optionAA){
-			
-		}
-	}
-	
 }
-
-
-
-
-
