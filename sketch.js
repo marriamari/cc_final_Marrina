@@ -1,84 +1,122 @@
 
 //uses P5 Play Library //
- 
-let index = 0;
-let speed = 6;
-let talkA = "Hi! I am Cutie!"
-let talkB = "Hello there. I'm Buddy..."
-let talkC = "Can you help me?"
-let font;
-
-let button; 
-let option = 1;
 
 let catAni;
 let dogAni;
 let curlyAni;
 let smallAni;
-
+let backdrop;
+let currentScene = 1;
 
 function preload(){
-  font = loadFont ('font0.otf')
+  font = loadFont ('font0.otf');
+	backdrop = loadImage ('Untitled_Artwork.png');
 }
 
 function setup() {
 	createCanvas(800,800);
-	background('#cff1ff');
+	background('#ffffff');
 	textFont(font);
-	textSize(60);
+	textSize(20);
+	catAni = new Sprite(200,460,50);
+	// dogAni = new Sprite(550, 250,50);
+	// curlyAni = new Sprite(550, 250,50);
+	// smallAni = new Sprite(550, 250,50);
 	
-	catAni = loadAni('Cat1.png',6);
-	dogAni = loadAni('Dog1.png',6);
-	curlyAni = loadAni ('Curl1.png',6);
-	smallAni = loadAni ('Small1.png',6);
+	catAni.addAni('walk','Cat1.png', 6);
+	// dogAni.addAni('walk','Dog1.png',6);
+	// curlyAni.addAni('walk','Curl1.png',6);
+	// smallAni.addAni('walk','Small1.png',6);
 	
-	button = new Button();
-}
-
-function draw() {
-	// if (option==1){
-	// 	// animationDrawA();
-	// 	cutieTalk();
-	// 	buddyTalk();
-	// 	animation(catAni,400,400);
-	// }
-	// clear();
-	animation(catAni,400,400);
-
-	
-	button.display();
-	button.mouseClicked();
-	// mouseClicked();
+	// catAni = loadAni('Cat1.png',6);
+	// dogAni = loadAni('Dog1.png',6);
+	// curlyAni = loadAni ('Curl1.png',6);
+	// smallAni = loadAni ('Small1.png',6);
 	
 }
 
-// function animationDrawA (){
-// 	clear();
-// 	scale(0.3);
-// 	animation(buddy,2000,1200);
-// 	animation(cutie,700,800);
-// }
+function draw(){
+  if (currentScene === 1) {
+    scene1();
+    if (catAni.position.x >= 800) {
+      currentScene = 2;
+      catAni.position.x = 0; // Reset cat's position for the next scene
+    }
+  } else if (currentScene === 2) {
+    scene2();
+    if (catAni.position.x >= 800) {
+      currentScene = 3;
+      catAni.position.x = 0; // Reset cat's position for the next scene
+    }
+  } else if (currentScene === 3) {
+    scene3();
+  }
 
-// function cutieTalk() { //fluffy talking
-// 	text(talkA.substring(0, index), 100, 110);
-// 	if (frameCount % speed == 0 && index < talkA.length) { //types the letters
-//     index++;
-//   }
-// }
+}
 
-// function buddyTalk() { //curly talking
-// 	text(talkB.substring(0, index), 150, 140);
-// 	if (frameCount % speed == 0 && index < talkB.length) { //types the letters
-//     index++;
-//   }
-// }
+function scene1(){
+		background(backdrop);
+		catAni.debug = mouse.pressing();
+		if (kb.pressing('left')) {
+		catAni.vel.x = -2;
+		catAni.mirror.x = true;
+	} else if (kb.pressing('right')) {
+		catAni.vel.x = 2;
+		catAni.mirror.x = false;
+	} else {
+		catAni.vel.x = 0;
+	}
+	  if (!dogAni) {
+    // Create dogAni only if it doesn't exist
+    dogAni = createSprite(550, 250, 50);
+    dogAni.addAnimation('walk', 'Dog1.png', 6);
+  }
+}
 
-// function mouseClicked(){
-// 	if (mouseY==height/2){
-// 			text(talkC.substring(0, index), 300, 1100);
-// 			if (frameCount % speed == 0 && index < talkC.length) { //types the letters
-//     		index++;
-//   		}
-// 		}
-// }
+function scene2(){
+		background(backdrop);
+		catAni.debug = mouse.pressing();
+		if (kb.pressing('left')) {
+		catAni.vel.x = -2;
+		catAni.mirror.x = true;
+	} else if (kb.pressing('right')) {
+		catAni.vel.x = 2;
+		catAni.mirror.x = false;
+	} else {
+		catAni.vel.x = 0;
+	}
+	
+	if (dogAni) {
+    dogAni.remove(); // or dogAni.visible = false;
+  }
+	if (!curlyAni) {
+    // Create curlyAni only if it doesn't exist
+    curlyAni = createSprite(550, 250, 50);
+    curlyAni.addAnimation('walk', 'Curl1.png', 6);
+  }
+}
+
+function scene3(){
+		background(backdrop);
+		catAni.debug = mouse.pressing();
+	if (kb.pressing('left')) {
+		catAni.vel.x = -2;
+		catAni.mirror.x = true;
+	} else if (kb.pressing('right')) {
+		catAni.vel.x = 2;
+		catAni.mirror.x = false;
+	} else {
+		catAni.vel.x = 0;
+	}
+	
+	if (curlyAni) {
+    curlyAni.remove(); // or dogAni.visible = false;
+  }
+	
+	if (!smallAni) {
+    // Create smallAni only if it doesn't exist
+    smallAni = createSprite(550, 250, 50);
+    smallAni.addAnimation('walk', 'Small1.png', 6);
+  }
+}
 
